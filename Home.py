@@ -1,5 +1,9 @@
 import streamlit as st
 
+CEREBRAS_API_KEY = "csk-e6pf3kwtrm8h2ejw8yhxjynpwtt3hxx3v392mjfwj6xvw298"
+WEAVIATE_URL = "https://lrbzwveyrc63jrp8ndf3ma.c0.us-west3.gcp.weaviate.cloud"
+WEAVIATE_API_KEY = "thFU4OaIzIAKYUdBSmmm24faJJhJRy2RI3jH"
+
 st.set_page_config(
     layout="wide", 
     page_title="Apollo Assist",
