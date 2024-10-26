@@ -77,7 +77,7 @@ st.markdown("<div class='button-container'>", unsafe_allow_html=True)
 st.markdown(
     """
     <a href="/GST-Weather" target="_self">
-        <button class="button">Explore Data</button>
+        <button class="button">Begin</button>
     </a>
     """,
     unsafe_allow_html=True
