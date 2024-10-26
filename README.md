@@ -4,7 +4,7 @@
 A comprehensive **Geomagnetic Weather Dashboard** for monitoring space weather events that affect Earth. Apollo Assist allows users to explore geomagnetic storms, solar flares, and coronal mass ejections, focusing on their impact on various professions and infrastructure worldwide.
 
 ## 📜 Project Overview
-Similar to Apple's weather app, Apollo Assist aims to provide an interactive visualization of geomagnetic disturbances and their impact across multiple domains. By utilizing real-time data from NASA's DONKI API, users can monitor and analyze key space weather metrics, track events over time, view a 3D models, and access a fast inference RAG model to perform further analysis. Built for De Anza Hacks 3.0.
+Basically a weather app but for geomagnetic radiation, Apollo Assist aims to provide an interactive visualization of geomagnetic disturbances and their impact across multiple domains. By utilizing real-time data from NASA's DONKI API, users can monitor and analyze key space weather metrics, track events over time, view a 3D models, and access a fast inference RAG model to perform further analysis. Built for De Anza Hacks 3.0.
 
 ## 💡 Key Features
 - **Real-Time Space Weather Data**: Fetches Geomagnetic Storm (GST), Solar Flare (FLR), and Coronal Mass Ejection (CME) data from NASA’s DONKI API.
