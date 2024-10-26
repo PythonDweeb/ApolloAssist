@@ -1,0 +1,6 @@
+streamlit==1.26.0
+requests==2.31.0
+pandas==2.0.3
+pytz==2023.3
+geopy==2.3.0
+timezonefinder==6.1.7
