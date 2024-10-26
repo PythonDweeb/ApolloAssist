@@ -1,7 +1,7 @@
+<img src="https://github.com/PythonDweeb/ApolloAssist/blob/main/images/apolloassist.png" alt="Apollo Assist Logo" width="300"/>
+
 # Apollo Assist 🚀
 A comprehensive **Geomagnetic Weather Dashboard** for monitoring space weather events that affect Earth. Apollo Assist allows users to explore geomagnetic storms, solar flares, and coronal mass ejections, focusing on their impact on various professions and infrastructure worldwide.
-
-<img src="https://github.com/PythonDweeb/ApolloAssist/blob/main/images/apolloassist.png" alt="Apollo Assist Logo" width="300"/>
 
 ## 📜 Project Overview
 Similar to Apple's weather app, Apollo Assist aims to provide an interactive visualization of geomagnetic disturbances and their impact across multiple domains. By utilizing real-time data from NASA's DONKI API, users can monitor and analyze key space weather metrics, track events over time, view a 3D models, and access a fast inference RAG model to perform further analysis.
