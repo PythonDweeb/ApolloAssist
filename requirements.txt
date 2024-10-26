@@ -5,7 +5,7 @@ pytz==2023.3
 geopy==2.3.0
 timezonefinder==6.1.7
 pydeck==0.9.1
-matplotlib
+matplotlib==3.7.1
 plotly==5.24.1
 weaviate
 langchain_weaviate
@@ -20,3 +20,4 @@ deepgram-sdk
 sentence-transformers
 silero_vad
 langchain_huggingface
+numpy==1.24.2
