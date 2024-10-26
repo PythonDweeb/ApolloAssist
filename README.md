@@ -11,7 +11,7 @@ Basically a weather app but for geomagnetic radiation, Apollo Assist aims to pro
 - **3D Geomagnetic Disturbance Visualization**: View an interactive heatmap of geomagnetic disturbances overlaid on a global map.
 - **Impact Analysis**: Details the effect of space weather on various professions, from pilots and astronauts to satellite operators and power grid workers.
 - **Dynamic Dashboard with Key Metrics**: Includes gauge charts and time series to track storm durations, Kp indices, and solar flare/cme counts.
-- **Fast Inference RAG Based Voice Assistant Model**: Access a highly specialized RAG model to assist in mitigating radiation effects and general queries.
+- **Fast Inference RAG Based Voice Assistant Model**: Access a highly specialized RAG model to assist in mitigating radiation effects and help answer queries.
 
 ## ⚙️ Tech Stack
 - **Frontend**: Streamlit, HTML, CSS, Javascript
