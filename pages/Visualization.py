@@ -4,6 +4,7 @@ import pydeck as pdk
 import numpy as np
 import matplotlib.pyplot as plt
 import os
+import matplotlib as mpl
 
 # ---------------------------
 # Streamlit App Configuration
@@ -22,13 +23,12 @@ Select a specific time instance from the sidebar to explore the global geomagnet
 """)
 
 # ---------------------------
-# Sidebar: File Path and Time Selection
+# Sidebar: Data Selection & Configuration
 # ---------------------------
 
-st.sidebar.header("Data Selection")
+st.sidebar.header("Data Selection & Configuration")
 
 # Define the path to your CSV file
-# Ensure the file '20241026-06-57-supermag.csv' is in the same directory as this script
 csv_file = '20241026-06-57-supermag.csv'
 
 # Check if the file exists
@@ -37,15 +37,11 @@ if not os.path.isfile(csv_file):
     st.stop()
 
 try:
-    # Load the CSV data into a Pandas DataFrame without parsing dates initially
+    # Load the CSV data into a Pandas DataFrame
     data = pd.read_csv(csv_file)
 except Exception as e:
     st.error(f"Error loading CSV file: {e}")
     st.stop()
-
-# Display column names for verification
-st.sidebar.subheader("Dataset Columns")
-st.sidebar.write(data.columns.tolist())
 
 # Ensure essential columns are present
 required_columns = ['Date_UTC', 'GEOLON', 'GEOLAT', 'dbn_geo', 'dbe_geo', 'dbz_geo']
@@ -61,8 +57,25 @@ except Exception as e:
     st.error(f"Error parsing 'Date_UTC' column as datetime: {e}")
     st.stop()
 
-# Display a few rows of the data for verification
-st.write("### Sample Data", data.head())
+# ---------------------------
+# Sidebar: Heatmap Configuration
+# ---------------------------
+
+st.sidebar.header("Heatmap Configuration")
+
+# Slider for Heatmap Intensity
+intensity = st.sidebar.slider(
+    "Heatmap Intensity",
+    min_value=0.1,
+    max_value=10.0,
+    value=1.0,  # Default value set to 1
+    step=0.1,
+    help="Adjust the overall intensity of the heatmap."
+)
+
+# ---------------------------
+# Data Processing
+# ---------------------------
 
 # Extract unique timestamps for selection
 unique_times = data['Date_UTC'].dt.floor('T').unique()
@@ -77,63 +90,81 @@ selected_time = st.sidebar.selectbox(
 )
 
 # Filter data for the selected time
-data_time = data[data['Date_UTC'] == selected_time]
+data_time = data[data['Date_UTC'] == selected_time].copy()
 
 if data_time.empty:
     st.warning("No data available for the selected time.")
 else:
     # Calculate Total Magnetic Field Strength
     # Total_Field = |dbn_geo| + |dbe_geo| + |dbz_geo|
-    data_time['Total_Field'] = data_time[['dbn_geo', 'dbe_geo', 'dbz_geo']].abs().sum(axis=1)
-    
+    data_time['Total_Field'] = (data_time[['dbn_geo', 'dbe_geo', 'dbz_geo']].abs().round().sum(axis=1))
+
     # Prepare DataFrame for Visualization
     viz_df = data_time[['GEOLON', 'GEOLAT', 'Total_Field']].copy()
     viz_df.rename(columns={'GEOLON': 'Longitude', 'GEOLAT': 'Latitude'}, inplace=True)
-    
+
     # Remove any rows with missing or invalid data
     viz_df.dropna(subset=['Longitude', 'Latitude', 'Total_Field'], inplace=True)
-    
-    # Display DataFrame Columns
-    st.write("### DataFrame Columns:", viz_df.columns.tolist())
-    
+
+    # Longitude Normalization: Normalize longitude to be between -180 and 180
+    viz_df['Longitude'] = viz_df['Longitude'].apply(lambda x: round(x - 360 if x > 180 else x))
+
     # ---------------------------
-    # Color Mapping Function
+    # Define Color Gradient with 60 Colors (Yellow to Red)
     # ---------------------------
-    
-    def get_color(value, max_val):
-        """
-        Map Total_Field to color.
-        Blue (low) to Red (high).
-        """
-        normalized = value / max_val if max_val else 0
-        r = int(255 * normalized)
-        g = 0
-        b = int(255 * (1 - normalized))
-        return [r, g, b, 180]  # RGBA
-    
-    # Apply color mapping
-    max_field = viz_df['Total_Field'].max()
-    viz_df['color'] = viz_df['Total_Field'].apply(lambda x: get_color(x, max_field))
-    
+
+    # Get the 'YlOrRd' colormap from Matplotlib
+    cmap = plt.get_cmap('YlOrRd')
+
+    # Generate 60 evenly spaced colors from the colormap
+    steps = np.linspace(0, 1, 60)
+    colors = [cmap(step) for step in steps]
+    # Convert RGBA from 0-1 to 0-255 scale
+    color_list = [
+        [int(r * 255), int(g * 255), int(b * 255), int(a * 255)]
+        for r, g, b, a in colors
+    ]
+
+    # Create a gradient dictionary for PyDeck
+    gradient = {
+        float(step): color
+        for step, color in zip(steps, color_list)
+    }
+
     # ---------------------------
-    # Visualization with HexagonLayer
+    # Visualization with HeatmapLayer
     # ---------------------------
-    
-    # Define the PyDeck HexagonLayer
-    hex_layer = pdk.Layer(
-        "HexagonLayer",
+
+    # Define the PyDeck HeatmapLayer
+    heatmap_layer = pdk.Layer(
+        "HeatmapLayer",
         data=viz_df,
         get_position=['Longitude', 'Latitude'],
-        auto_highlight=True,
-        radius=50000,  # 50 km radius
-        elevation_scale=50,
-        elevation_range=[0, 1000],
+        get_weight='Total_Field',
+        radius=15000,        # Halved radius from 20000 to 10000 meters
+        intensity=intensity,  # Adjusted intensity slider
+        threshold=0.10,      # Default threshold
+        aggregation='sum',   # Default aggregation method
+        gradient=gradient,    # Custom 60-step gradient
+    )
+
+    # ---------------------------
+    # Visualization with ColumnLayer (3D Elevation)
+    # ---------------------------
+
+    # Define the PyDeck ColumnLayer
+    column_layer = pdk.Layer(
+        "ColumnLayer",
+        data=viz_df,
+        get_position=['Longitude', 'Latitude'],
+        get_elevation='Total_Field',
+        elevation_scale=1000,  # Adjust scaling factor as needed
+        radius=20000,          # Radius of the column base in meters
+        get_fill_color=[255, 0, 0, 180],  # Red color for columns
         pickable=True,
         extruded=True,
-        get_fill_color='color',
-        get_elevation='Total_Field',
     )
-    
+
     # Define the initial view state
     view_state = pdk.ViewState(
         latitude=0,
@@ -141,51 +172,52 @@ else:
         zoom=1,
         pitch=60  # Tilt the map for better 3D effect
     )
-    
-    # Define tooltips with correct placeholder
-    tooltip = {
-        "html": "<b>Total Magnetic Field:</b> {elevationValue} nT",
-        "style": {
-            "backgroundColor": "steelblue",
-            "color": "white"
-        }
-    }
-    
-    # Create the Deck.gl map
+
+    # Create the Deck.gl map with HeatmapLayer and ColumnLayer
     deck = pdk.Deck(
-        layers=[hex_layer],
+        layers=[heatmap_layer, column_layer],
         initial_view_state=view_state,
-        tooltip=tooltip,
-        map_style=None  # Use default OpenStreetMap tiles
+        map_style='mapbox://styles/mapbox/dark-v10',  # Dark map style
+        tooltip={
+            "html": "<b>Latitude:</b> {Latitude}<br/><b>Longitude:</b> {Longitude}<br/><b>Total Magnetic Field:</b> {Total_Field} nT",
+            "style": {
+                "backgroundColor": "steelblue",
+                "color": "white"
+            }
+        }
     )
-    
+
     # Display the map in Streamlit
-    st.pydeck_chart(deck)
-    
-    # ---------------------------
-    # Add Color Legend
-    # ---------------------------
-    
-    st.markdown("### Legend: Total Magnetic Field Strength (nT)")
-    
-    # Create a color bar using matplotlib
-    fig, ax = plt.subplots(figsize=(6, 1))
-    fig.subplots_adjust(bottom=0.5)
-    
-    cmap = plt.get_cmap('jet')
-    norm = plt.Normalize(vmin=viz_df['Total_Field'].min(), vmax=viz_df['Total_Field'].max())
-    cb1 = plt.colorbar(plt.cm.ScalarMappable(norm=norm, cmap=cmap), cax=ax, orientation='horizontal')
-    cb1.set_label('Total Magnetic Field Strength (nT)')
-    
-    st.pyplot(fig)
+    st.pydeck_chart(deck, height=650)
 
-# ---------------------------
-# Footer
-# ---------------------------
+    # # ---------------------------
+    # # Add Color Legend with Numerical Labels
+    # # ---------------------------
 
-st.markdown("""
----
-**Data Source:** `20241026-06-57-supermag.csv`  
-**Visualization:** [PyDeck](https://deck.gl/) & [Matplotlib](https://matplotlib.org/)  
-**Built with:** [Streamlit](https://streamlit.io/)
-""")
+    # st.markdown("### Legend: Total Magnetic Field Strength with Intensity 1.0 and Zoom 1.0 (nT)")
+
+    #     # Create a color bar using matplotlib
+    # fig, ax = plt.subplots(figsize=(8, 1))  # Increased size for better visibility
+    # # fig.patch.set_alpha(0)  # Make the figure background transparent
+    # # ax.patch.set_alpha(0)   # Make the axis background transparent
+
+    # # Create a ScalarMappable for the legend with the 'YlOrRd' colormap, setting range from 0 to 500 nT
+    # norm = mpl.colors.Normalize(vmin=0, vmax=500)
+    # sm = mpl.cm.ScalarMappable(cmap='YlOrRd', norm=norm)
+    # sm.set_array([])
+
+    # # Add color bar with the updated range from 0 to 500 nT
+    # cb1 = plt.colorbar(sm, cax=ax, orientation='horizontal', aspect=25)
+    # cb1.set_label('Total Magnetic Field Strength (nT)', fontsize=10, color='white')  # Set label color to white
+
+    # # Set the ticks to display numbers from 0 to 500 nT with intermediate steps
+    # cb1.set_ticks([0, 100, 200, 300, 400, 500])
+    # cb1.ax.set_xticklabels(['0', '100', '200', '300', '400', '500'], fontsize=10, color='black')  # Set tick label color to white
+
+    # # Adjust tick label size and color for better readability
+    # cb1.ax.tick_params(labelsize=10, colors='black')  # Set tick params color to white
+
+    # # Remove axis lines for better aesthetics
+    # ax.axis('off')
+
+    # st.pyplot(fig)
