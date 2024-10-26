@@ -69,7 +69,7 @@ st.markdown("<h1 class='title'>Apollo Assist</h1>", unsafe_allow_html=True)
 st.markdown("<div class='button-container'>", unsafe_allow_html=True)
 st.markdown(
     """
-    <a href="/Overview" target="_self">
+    <a href="/overview" target="_self">
         <button class="button">Explore Data</button>
     </a>
     """,
