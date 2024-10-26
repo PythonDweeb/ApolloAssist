@@ -7,3 +7,16 @@ timezonefinder==6.1.7
 pydeck==0.9.1
 matplotlib
 plotly==5.24.1
+weaviate
+langchain_weaviate
+langchain_cerebras
+langchain_community
+langchain
+livekit-agents
+silero
+cartesia
+openai
+deepgram-sdk
+sentence-transformers
+silero_vad
+langchain_huggingface
