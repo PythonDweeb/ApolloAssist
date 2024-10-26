@@ -403,5 +403,8 @@ if st.sidebar.button("🚀 Fetch Data"):
             )
 
             st.plotly_chart(fig, use_container_width=True, key="kp_indices_time_series")
+            st.session_state['gst_data'] = gst_df if gst_data and not gst_df.empty else None
+            st.session_state['metrics'] = metrics
+
     else:
         st.warning("⚠️ GST data is unavailable or no events found.")

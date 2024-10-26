@@ -30,10 +30,18 @@ professions = {
 
 left_col, right_col = st.columns([1, 1])
 
+# this is just to see it, remove it later but this is how u can access the data
+if 'gst_data' in st.session_state:
+    st.write("📊 Geomagnetic Storm Events Data:")
+    st.dataframe(st.session_state['gst_data'])
+
 with left_col:
     for profession, impact in professions.items():
         with st.expander(profession):
             st.write(impact)
 
+# temp text but 
 with right_col:
-    st.write("add ai stuff here")
+    st.write("🌟 Metrics Overview")
+    for metric, params in st.session_state['metrics'].items():
+        st.write(f"{metric}: {params['value']}")
