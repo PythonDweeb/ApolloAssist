@@ -35,8 +35,8 @@ def get_nearest_kp_value(geolocation, csv_data):
 # Upload vectors to Weaviate
 def upload_vectors(csv_data, embeddings, client):
     vector_store = WeaviateVectorStore(client=client, index_name="geo_data", text_key="description", embedding=embeddings)
-    
-    for i, row in csv_data.iterrows():
+    limited_data = csv_data.head(176)
+    for i, row in limited_data.iterrows():
         vector_store.add_texts([str(row)])
     
     return vector_store
