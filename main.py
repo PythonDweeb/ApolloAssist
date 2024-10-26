@@ -1,16 +1,18 @@
 import streamlit as st
 
-# Set the page configuration
-st.set_page_config(layout="centered", page_title="Apollo Assist")
+st.set_page_config(
+    layout="wide", 
+    page_title="Apollo Assist",
+    page_icon="🚀"
+)
 
-# Background image URL
-background_image = "https://us-east.storage.cloudconvert.com/tasks/cb44b8c2-d965-4562-bf6b-f9d3630148ae/homepage.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=cloudconvert-production%2F20241026%2Fva%2Fs3%2Faws4_request&X-Amz-Date=20241026T060023Z&X-Amz-Expires=86400&X-Amz-Signature=26563f8311392d66865395fbd46f1e915710c5e99a320bbd69852b47761df9d7&X-Amz-SignedHeaders=host&response-content-disposition=inline%3B%20filename%3D%22homepage.png%22&response-content-type=image%2Fpng&x-id=GetObject"
+background_image = "https://i.ibb.co/HhrFkjR/mainpage-upscaled.png"
 
-# Apply custom CSS for background image, text styling, and hide the sidebar
 st.markdown(
     f"""
     <style>
-    /* Hide the sidebar */
+    @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap');
+
     [data-testid="stSidebar"] {{
         display: none;
     }}
@@ -20,7 +22,6 @@ st.markdown(
     button[kind="expandNav"] {{
         display: none;
     }}
-    /* Background and text styles */
     .stApp {{
         background-image: url("{background_image}");
         background-size: cover;
@@ -29,47 +30,53 @@ st.markdown(
         background-attachment: fixed;
     }}
     .title {{
-        font-size: 72px;
-        font-weight: bold;
+        font-family: 'Luckiest Guy', cursive;
+        font-size: 100px;
         color: white;
-        -webkit-text-stroke: 2px black;
-        text-align: center;
-        margin-top: 100px;
+        -webkit-text-stroke: 4px black;
+        text-align: left;
+        margin-top: 250px;
+        margin-left: 5px;
+        text-shadow:
+            -3px -3px 0 #000,
+            3px -3px 0 #000,
+            -3px 3px 0 #000,
+            3px 3px 0 #000;
     }}
     .button-container {{
         display: flex;
-        justify-content: center;
-        margin-top: 50px;
+        justify-content: flex-start;
+        margin-top: 25px;
+        margin-left: 50px;
     }}
     .button {{
         background-color: #ffffff;
         border: none;
         color: black;
-        padding: 15px 32px;
+        padding: 15px 30px;
         text-align: center;
         text-decoration: none;
-        display: inline-block;
-        font-size: 24px;
+        font-size: 20px;
         font-weight: bold;
-        border-radius: 8px;
+        border-radius: 15px;
         cursor: pointer;
+        transition: all 0.3s ease;
     }}
     .button:hover {{
-        background-color: #e0e0e0;
+        background-color: #cccccc;
+        transform: scale(1.05);
     }}
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# Display the title
 st.markdown("<h1 class='title'>Apollo Assist</h1>", unsafe_allow_html=True)
 
-# Center the 'Explore Data' button as a hyperlink
 st.markdown("<div class='button-container'>", unsafe_allow_html=True)
 st.markdown(
     """
-    <a href="/Overview" target="_self">
+    <a href="/overview" target="_self">
         <button class="button">Explore Data</button>
     </a>
     """,
