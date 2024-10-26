@@ -28,9 +28,12 @@ professions = {
     "Railroad Operators": "Signal systems may fail, affecting train schedules and safety.",
 }
 
-left_col, right_col = st.columns([3,1])
+left_col, right_col = st.columns([1, 1])
 
 with left_col:
     for profession, impact in professions.items():
         with st.expander(profession):
             st.write(impact)
+
+with right_col:
+    st.write("add ai stuff here")
