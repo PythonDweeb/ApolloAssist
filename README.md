@@ -26,9 +26,18 @@ Home Page:
 
 <img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/097/656/datas/original.png" alt="Apollo Assist Logo" width="600"/>
 
-GST Weather Dashboard:
+Geomagnetic Radiation Weather Dashboard:
 
-<img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/097/653/datas/original.png" alt="GST Dashboard" width="600"/>
+<img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/097/653/datas/original.png" alt="Radiation Dashboard" width="600"/>
+
+Geomagnetic Radiation Fast-Inference AI RAG Model:
+
+<img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/097/869/datas/original.png" alt="RAG AI" width="600"/>
+
+Geomagnetic Disturbance 3D Heat Map and Graphs:
+
+<img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/097/654/datas/original.png" alt="Visuals" width="600"/>
+<img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/097/655/datas/original.png" alt="Visuals" width="600"/>
 
 ## 🚀 Getting Started
 ### Prerequisites
