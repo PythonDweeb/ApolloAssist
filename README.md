@@ -17,7 +17,7 @@ Basically a weather app but for geomagnetic radiation, Apollo Assist aims to pro
 - **Frontend**: Streamlit, HTML, CSS, Javascript
 - **Backend**: Python (Pandas, Requests, Numpy)
 - **AI/ML**: Cerebras, Weaviate
-- **Visualization**: Plotly, Pydeck, Matplotlib, Godot
+- **Visualization**: Plotly, Pydeck, Matplotlib
 - **Data Source**: NASA DONKI API, Openstreetmaps API, Supermag API
 
 ## 🖼️ Snapshots
