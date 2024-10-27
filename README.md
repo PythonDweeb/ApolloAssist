@@ -20,9 +20,14 @@ Basically a weather app but for geomagnetic radiation, Apollo Assist aims to pro
 - **Visualization**: Plotly, Pydeck, Matplotlib, Godot
 - **Data Source**: NASA DONKI API, Openstreetmaps API, Supermag API
 
+## 🖼️ Snapshots
+
+Home Page:
+<img src="https://i.ibb.co/sgy7t8Q/image.png" alt="Apollo Assist Logo" width="300"/>
+
 ## 🚀 Getting Started
 ### Prerequisites
 - **Python 3.7+**
 - **Streamlit** and additional libraries:
   ```bash
-  pip install streamlit pandas plotly pydeck requests numpy
+  pip install -r requirements.txt
