@@ -24,7 +24,11 @@ Basically a weather app but for geomagnetic radiation, Apollo Assist aims to pro
 
 Home Page:
 
-<img src="https://i.ibb.co/sgy7t8Q/image.png" alt="Apollo Assist Logo" width="300"/>
+<img src="https://i.ibb.co/sgy7t8Q/image.png" alt="Apollo Assist Logo" width="600"/>
+
+GST Weather Dashboard:
+
+<img src="https://i.ibb.co/x2K4Sbx/image.png" alt="Apollo Assist Logo" width="600"/>
 
 ## 🚀 Getting Started
 ### Prerequisites
