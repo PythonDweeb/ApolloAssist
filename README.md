@@ -39,7 +39,7 @@ Geomagnetic Disturbance 3D Heat Map and Graphs:
 <img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/097/654/datas/original.png" alt="Visuals" width="600"/>
 <img src="https://d112y698adiu2z.cloudfront.net/photos/production/software_photos/003/097/655/datas/original.png" alt="Visuals" width="600"/>
 
-## 🚀 Getting Started
+## 🛠️ Getting Started
 ### Prerequisites
 - **Python 3.7+**
 - **Streamlit** and additional libraries:
@@ -48,3 +48,7 @@ Geomagnetic Disturbance 3D Heat Map and Graphs:
 - **Run:**
   ```bash
   streamlit run Home.py
+
+## 📱Devpost
+
+https://devpost.com/software/apollo-assist
