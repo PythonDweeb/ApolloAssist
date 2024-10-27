@@ -23,6 +23,7 @@ Basically a weather app but for geomagnetic radiation, Apollo Assist aims to pro
 ## 🖼️ Snapshots
 
 Home Page:
+
 <img src="https://i.ibb.co/sgy7t8Q/image.png" alt="Apollo Assist Logo" width="300"/>
 
 ## 🚀 Getting Started
