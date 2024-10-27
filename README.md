@@ -45,3 +45,4 @@ Geomagnetic Disturbance 3D Heat Map and Graphs:
 - **Streamlit** and additional libraries:
   ```bash
   pip install -r requirements.txt
+  streamlit run Home.py
